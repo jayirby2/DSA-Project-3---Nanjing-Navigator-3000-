@@ -52,9 +52,6 @@ std::pair<std::unordered_map<int, double>, std::unordered_map<int, int>> dijkstr
     return {distances, previous};
 }
 
-// Reconstructs the shortest path from start to target using the 'previous' map.
-// 'previous' maps each node to its predecessor (or -1 if none).
-// Returns a vector of nodes from start to target, or empty if no path exists.
 std::vector<int> reconstruct_path(
     const std::unordered_map<int, int>& previous,
     int start,
@@ -63,7 +60,6 @@ std::vector<int> reconstruct_path(
     std::vector<int> path;
     int node = target;
 
-    // Walk backwards from target to start
     while (node != -1) {
         path.push_back(node);
         if (node == start) {
@@ -71,27 +67,21 @@ std::vector<int> reconstruct_path(
         }
         auto it = previous.find(node);
         if (it == previous.end()) {
-            // No predecessor information, abort
             path.clear();
             return path;
         }
         node = it->second;
     }
 
-    // Reverse to get path from start → target
     std::reverse(path.begin(), path.end());
 
-    // Verify that path actually begins with start
     if (!path.empty() && path.front() == start) {
         return path;
     } else {
-        return {};  // no valid path
+        return {};
     }
 }
 
-// Reads a CSV file with columns: Source,Destination,Weight
-// and builds an adjacency‑list graph.
-// If you need an undirected graph, uncomment the second push_back.
 std::unordered_map<int, std::vector<std::pair<int, double>>>
 read_graph_from_csv(const std::string& filename) {
     std::unordered_map<int, std::vector<std::pair<int, double>>> graph;
@@ -108,7 +98,6 @@ read_graph_from_csv(const std::string& filename) {
         return graph;
     }
 
-    // Each subsequent line: Source,Destination,Weight
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::string token;
@@ -116,19 +105,15 @@ read_graph_from_csv(const std::string& filename) {
         int destination;
         double weight;
 
-        // Parse Source
         if (!std::getline(ss, token, ',')) continue;
         source = std::stoi(token);
 
-        // Parse Destination
         if (!std::getline(ss, token, ',')) continue;
         destination = std::stoi(token);
 
-        // Parse Weight
         if (!std::getline(ss, token, ',')) continue;
         weight = std::stod(token);
 
-        // Add the directed edge source → destination
         graph[source].push_back(std::make_pair(destination, weight));
     }
 
@@ -140,30 +125,52 @@ int main() {
     const std::string filename = "/Users/benjaminlang/Documents/School/Spring 25/DSA-Project-3---Nanjing-Navigator-3000-/Nanjing_distances.csv";
     auto graph = read_graph_from_csv(filename);
 
-    int startNode = 0;
-    auto t_start = std::chrono::high_resolution_clock::now();
-    auto result  = dijkstra(graph, startNode);
-    auto t_end   = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> total_time_ms{0.0};
+    int num_calls = 0;
 
-    std::chrono::duration<double, std::milli> elapsed = t_end - t_start;
-    std::cout << "Dijkstra run time: " << elapsed.count() << " ms\n";
-
-    auto distances = result.first;
-    auto previous  = result.second;
-
-    int targetNode = 90089;
-    std::vector<int> shortestPath = reconstruct_path(previous, startNode, targetNode);
-
-    std::cout << "The path is of length: " << (size(shortestPath)) << std::endl;
-
-    if (!shortestPath.empty()) {
-        std::cout << "Shortest path: ";
-        for (int u : shortestPath) {
-            std::cout << u << " ";
-        }
-        std::cout << "\n";
-    } else {
-        std::cout << "No path from " << startNode << " to " << targetNode << "\n";
+    for (int i = 1; i <= 10; ++i) {
+        int source = i;
+        auto t0 = std::chrono::high_resolution_clock::now();
+        dijkstra(graph, source);
+        auto t1 = std::chrono::high_resolution_clock::now();
+        total_time_ms += (t1 - t0);
+        ++num_calls;
     }
+
+    double total_ms  = total_time_ms.count();
+    double avg_ms    = total_ms / num_calls;
+    double total_sec = total_ms / 1000.0;
+
+    std::cout << "=== Performance Comparison ===\n"
+              << "Dijkstra's Algorithm: " << num_calls << " calls\n"
+              << std::fixed << std::setprecision(3)
+              << "  Total time: "   << total_ms  << " ms (" << total_sec << " s)\n"
+              << "  Average: "      << avg_ms    << " ms/call\n";
+
+    // int startNode = 0;
+    // auto t_start = std::chrono::high_resolution_clock::now();
+    // auto result  = dijkstra(graph, startNode);
+    // auto t_end   = std::chrono::high_resolution_clock::now();
+    //
+    // std::chrono::duration<double, std::milli> elapsed = t_end - t_start;
+    // std::cout << "Dijkstra run time: " << elapsed.count() << " ms\n";
+    //
+    // auto distances = result.first;
+    // auto previous  = result.second;
+    //
+    // int targetNode = 90089;
+    // std::vector<int> shortestPath = reconstruct_path(previous, startNode, targetNode);
+    //
+    // std::cout << "The path is of length: " << (size(shortestPath)) << std::endl;
+    //
+    // if (!shortestPath.empty()) {
+    //     std::cout << "Shortest path: ";
+    //     for (int u : shortestPath) {
+    //         std::cout << u << " ";
+    //     }
+    //     std::cout << "\n";
+    // } else {
+    //     std::cout << "No path from " << startNode << " to " << targetNode << "\n";
+    // }
     return 0;
 }
