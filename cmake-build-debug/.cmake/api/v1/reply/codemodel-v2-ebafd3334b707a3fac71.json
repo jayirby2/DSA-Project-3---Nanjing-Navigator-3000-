@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.30"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "DSA_Project_3___Nanjing_Navigator_3000_",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "DSA_Project_3___Nanjing_Navigator_3000_::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-DSA_Project_3___Nanjing_Navigator_3000_-Debug-bc1d49dc7ac0e926fed8.json",
+					"name" : "DSA_Project_3___Nanjing_Navigator_3000_",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/benjaminlang/Documents/School/Spring 25/DSA-Project-3---Nanjing-Navigator-3000-/cmake-build-debug",
+		"source" : "/Users/benjaminlang/Documents/School/Spring 25/DSA-Project-3---Nanjing-Navigator-3000-"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
