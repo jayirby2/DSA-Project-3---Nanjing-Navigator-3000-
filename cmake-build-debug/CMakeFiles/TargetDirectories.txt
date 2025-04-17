@@ -1,3 +1,0 @@
-/Users/benjaminlang/Documents/School/Spring 25/DSA-Project-3---Nanjing-Navigator-3000-/cmake-build-debug/CMakeFiles/DSA_Project_3___Nanjing_Navigator_3000_.dir
-/Users/benjaminlang/Documents/School/Spring 25/DSA-Project-3---Nanjing-Navigator-3000-/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/benjaminlang/Documents/School/Spring 25/DSA-Project-3---Nanjing-Navigator-3000-/cmake-build-debug/CMakeFiles/rebuild_cache.dir
